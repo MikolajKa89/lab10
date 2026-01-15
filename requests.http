@@ -1,0 +1,59 @@
+### TEST 1: Poprawna rejestracja (Powinno zwrócić 201 Created)
+POST http://localhost:8080/api/users/register
+Content-Type: application/json
+User-Agent: MojTestowyKlient
+
+{
+  "username": "student",
+  "email": "student@example.com",
+  "password": "BezpieczneHaslo123"
+}
+###
+
+### TEST 2: Błąd walidacji - SPACJA w haśle (Powinno zwrócić 400 Bad Request)
+POST http://localhost:8080/api/users/register
+Content-Type: application/json
+Authorization: Basic dXNlcjpwYXNzd29yZA==
+User-Agent: MojTestowyKlient
+
+{
+  "username": "student",
+  "email": "student@example.com",
+  "password": "Haslo ze spacja"
+}
+
+### Logowanie (Pobranie Tokena)
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "student",
+  "password": "BezpieczneHaslo123"
+}
+
+
+### Test dostępu do zabezpieczonych zasobów
+GET http://localhost:8080/hello
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY4NTE1ODE5LCJleHAiOjE3Njg2MDIyMTl9.yZrFwrxmE8MvSAUuAFYPqX_2u2B-8qfErA_JFTIy2a0
+
+
+
+//aaaaaaaaaaaaaaaaa
+
+
+### 1. Dodaj zadanie (Wymaga Tokena)
+POST http://localhost:8080/api/tasks
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY4NTE1ODE5LCJleHAiOjE3Njg2MDIyMTl9.yZrFwrxmE8MvSAUuAFYPqX_2u2B-8qfErA_JFTIy2a0
+
+
+
+{
+  "title": "Zrobić projekt na studia",
+  "description": "Dokończyć Lab 11-12 z PDFa"
+}
+
+### 2. Pobierz moje zadania (Wymaga Tokena)
+GET http://localhost:8080/api/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY4NTE1ODE5LCJleHAiOjE3Njg2MDIyMTl9.yZrFwrxmE8MvSAUuAFYPqX_2u2B-8qfErA_JFTIy2a0
+
