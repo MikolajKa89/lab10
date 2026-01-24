@@ -21,14 +21,10 @@ jobs:
         cache: maven
         
     - name: Build with Maven
-      # Wskazujemy, ze pom.xml jest w folderze lab10
       run: mvn -B package --file pom.xml
 
-- name: OWASP Dependency Check
+    - name: OWASP Dependency Check
       uses: dependency-check/Dependency-Check_Action@main
-      env:
-        # Potrzebne, zeby skaner wiedzial, gdzie jest Java
-        JAVA_HOME: ${{ steps.setup-java.outputs.path }}
       with:
         project: 'lab10'
         path: '.'
