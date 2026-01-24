@@ -24,6 +24,5 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: OWASP Dependency Check
-      # ZMIANA: Uruchamiamy skaner bezposrednio przez Maven.
-      # Korzysta on z tej samej Javy co wczesniej, wiec nie bedzie bledu sciezek!
-      run: mvn org.owasp:dependency-check-maven:check -Dformat=HTML -DfailBuildOnCVSS=7
+      # DODANO: 'purge' przed 'check'. To czysci zepsuta baze danych przed skanowaniem.
+      run: mvn org.owasp:dependency-check-maven:purge org.owasp:dependency-check-maven:check -Dformat=HTML -DfailBuildOnCVSS=7
