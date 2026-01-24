@@ -22,4 +22,4 @@ jobs:
         
     - name: Build with Maven
       # Wskazujemy, ze pom.xml jest w folderze lab10
-      run: mvn -B package --file lab10/pom.xml
+      run: mvn -B package --file pom.xml
