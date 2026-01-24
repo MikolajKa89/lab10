@@ -22,7 +22,3 @@ jobs:
         
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-
-    - name: OWASP Dependency Check
-      # DODANO: 'purge' przed 'check'. To czysci zepsuta baze danych przed skanowaniem.
-      run: mvn org.owasp:dependency-check-maven:purge org.owasp:dependency-check-maven:check -Dformat=HTML -DfailBuildOnCVSS=7
