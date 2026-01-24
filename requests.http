@@ -1,28 +1,14 @@
-### TEST 1: Poprawna rejestracja (Powinno zwrócić 201 Created)
+### KROK 1: Rejestracja użytkownika
 POST http://localhost:8080/api/users/register
 Content-Type: application/json
-User-Agent: MojTestowyKlient
 
 {
   "username": "student",
   "email": "student@example.com",
   "password": "BezpieczneHaslo123"
 }
-###
 
-### TEST 2: Błąd walidacji - SPACJA w haśle (Powinno zwrócić 400 Bad Request)
-POST http://localhost:8080/api/users/register
-Content-Type: application/json
-Authorization: Basic dXNlcjpwYXNzd29yZA==
-User-Agent: MojTestowyKlient
-
-{
-  "username": "student",
-  "email": "student@example.com",
-  "password": "Haslo ze spacja"
-}
-
-### Logowanie (Pobranie Tokena)
+### KROK 2: Logowanie
 POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
@@ -31,29 +17,28 @@ Content-Type: application/json
   "password": "BezpieczneHaslo123"
 }
 
-
-### Test dostępu do zabezpieczonych zasobów
+### KROK 3: Test dostępu (Wklej ACCESS TOKEN)
 GET http://localhost:8080/hello
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY4NTE1ODE5LCJleHAiOjE3Njg2MDIyMTl9.yZrFwrxmE8MvSAUuAFYPqX_2u2B-8qfErA_JFTIy2a0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5MjgyMTMxLCJleHAiOjE3NjkzNjg1MzF9.RenkBMNDXboVXzG9PAWhGJg_3E9VYLAP46ri3jOEPVc
 
-
-
-//aaaaaaaaaaaaaaaaa
-
-
-### 1. Dodaj zadanie (Wymaga Tokena)
+### KROK 4: Dodaj zadanie (Wklej ACCESS TOKEN)
 POST http://localhost:8080/api/tasks
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY4NTE1ODE5LCJleHAiOjE3Njg2MDIyMTl9.yZrFwrxmE8MvSAUuAFYPqX_2u2B-8qfErA_JFTIy2a0
-
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5MjgyMTMxLCJleHAiOjE3NjkzNjg1MzF9.RenkBMNDXboVXzG9PAWhGJg_3E9VYLAP46ri3jOEPVc
 
 {
   "title": "Zrobić projekt na studia",
-  "description": "Dokończyć Lab 11-12 z PDFa"
+  "description": "Dokończyć Lab 13 - Refresh Token"
 }
 
-### 2. Pobierz moje zadania (Wymaga Tokena)
+### KROK 5: Pobierz zadania (Wklej ACCESS TOKEN)
 GET http://localhost:8080/api/tasks
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY4NTE1ODE5LCJleHAiOjE3Njg2MDIyMTl9.yZrFwrxmE8MvSAUuAFYPqX_2u2B-8qfErA_JFTIy2a0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5MjgyMTMxLCJleHAiOjE3NjkzNjg1MzF9.RenkBMNDXboVXzG9PAWhGJg_3E9VYLAP46ri3jOEPVc
 
+### KROK 6: ODŚWIEŻANIE TOKENA (Wklej REFRESH TOKEN)
+POST http://localhost:8080/api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "c1720fb8-3c5e-4cd3-b0dd-ff5fc409c5ab"
+}

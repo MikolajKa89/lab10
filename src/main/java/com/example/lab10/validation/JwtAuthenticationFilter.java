@@ -1,4 +1,4 @@
-package com.example.lab10;
+package com.example.lab10.validation;
 
 import com.example.lab10.service.JwtService;
 import jakarta.servlet.FilterChain;
@@ -14,10 +14,17 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+// TEGO BRAKOWAŁO: Importy do logowania
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    // 1. Definicja loggera
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
@@ -37,33 +44,39 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
-        // 1. Sprawdzamy czy nagłówek istnieje i czy zaczyna się od "Bearer "
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 2. Wyciągamy sam token (ucinamy "Bearer ")
-        jwt = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(jwt); // Zakładam, że masz taką metodę w JwtService
+        try {
+            jwt = authHeader.substring(7);
+            userEmail = jwtService.extractUsername(jwt);
 
-        // 3. Jeśli mamy maila i użytkownik nie jest jeszcze zalogowany w tym wątku
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
-            // 4. Walidujemy token
-            if (jwtService.isTokenValid(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                if (jwtService.isTokenValid(jwt, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
 
-                // 5. Logujemy użytkownika w Spring Security!
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                    // Opcjonalnie: Logujemy udaną autoryzację (można zakomentować, żeby nie śmiecić)
+                    // logger.debug("Pomyślna autoryzacja tokenem dla: {}", userEmail);
+                } else {
+                    // Logujemy próbę użycia nieważnego tokena
+                    logger.warn("Nieprawidłowy token JWT dla użytkownika: {}", userEmail);
+                }
             }
+        } catch (Exception e) {
+            // Logujemy błędy parsowania tokena (np. token wygasł lub jest sfałszowany)
+            logger.error("Błąd uwierzytelniania JWT: {}", e.getMessage());
         }
+
         filterChain.doFilter(request, response);
     }
 }
