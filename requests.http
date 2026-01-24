@@ -3,7 +3,7 @@ POST http://localhost:8080/api/users/register
 Content-Type: application/json
 
 {
-  "username": "student",
+  "username": "student3",
   "email": "student@example.com",
   "password": "BezpieczneHaslo123"
 }
@@ -13,18 +13,18 @@ POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "student",
+  "username": "student3",
   "password": "BezpieczneHaslo123"
 }
 
 ### KROK 3: Test dostępu (Wklej ACCESS TOKEN)
 GET http://localhost:8080/hello
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5MjgyMTMxLCJleHAiOjE3NjkzNjg1MzF9.RenkBMNDXboVXzG9PAWhGJg_3E9VYLAP46ri3jOEPVc
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5Mjk3NTcwLCJleHAiOjE3NjkzODM5NzB9.wf_Ktal4RcLUsgNIwGSkEl1bWLLsgVilTNXT83V-JuA
 
 ### KROK 4: Dodaj zadanie (Wklej ACCESS TOKEN)
 POST http://localhost:8080/api/tasks
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5MjgyMTMxLCJleHAiOjE3NjkzNjg1MzF9.RenkBMNDXboVXzG9PAWhGJg_3E9VYLAP46ri3jOEPVc
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5Mjk3NTcwLCJleHAiOjE3NjkzODM5NzB9.wf_Ktal4RcLUsgNIwGSkEl1bWLLsgVilTNXT83V-JuA
 
 {
   "title": "Zrobić projekt na studia",
@@ -33,12 +33,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5M
 
 ### KROK 5: Pobierz zadania (Wklej ACCESS TOKEN)
 GET http://localhost:8080/api/tasks
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5MjgyMTMxLCJleHAiOjE3NjkzNjg1MzF9.RenkBMNDXboVXzG9PAWhGJg_3E9VYLAP46ri3jOEPVc
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5Mjk3NTcwLCJleHAiOjE3NjkzODM5NzB9.wf_Ktal4RcLUsgNIwGSkEl1bWLLsgVilTNXT83V-JuA
 
 ### KROK 6: ODŚWIEŻANIE TOKENA (Wklej REFRESH TOKEN)
 POST http://localhost:8080/api/auth/refresh
 Content-Type: application/json
 
 {
-  "refreshToken": "c1720fb8-3c5e-4cd3-b0dd-ff5fc409c5ab"
+  "refreshToken": "37ee399d-3260-40f3-8c79-337e98ad513b"
 }
