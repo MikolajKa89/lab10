@@ -3,7 +3,7 @@ POST http://localhost:8080/api/users/register
 Content-Type: application/json
 
 {
-  "username": "student3",
+  "username": "student8",
   "email": "student@example.com",
   "password": "BezpieczneHaslo123"
 }
@@ -13,32 +13,33 @@ POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "student3",
+  "username": "student8",
   "password": "BezpieczneHaslo123"
 }
 
 ### KROK 3: Test dostępu (Wklej ACCESS TOKEN)
 GET http://localhost:8080/hello
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5Mjk3NTcwLCJleHAiOjE3NjkzODM5NzB9.wf_Ktal4RcLUsgNIwGSkEl1bWLLsgVilTNXT83V-JuA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50OCIsImlhdCI6MTc2OTU0NzcyNiwiZXhwIjoxNzY5NjM0MTI2fQ.mfAqEEsf4GD8f2g4E_70S1QwF42z90WFWewqHu4eLl0
 
 ### KROK 4: Dodaj zadanie (Wklej ACCESS TOKEN)
 POST http://localhost:8080/api/tasks
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5Mjk3NTcwLCJleHAiOjE3NjkzODM5NzB9.wf_Ktal4RcLUsgNIwGSkEl1bWLLsgVilTNXT83V-JuA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50OCIsImlhdCI6MTc2OTU0NzcyNiwiZXhwIjoxNzY5NjM0MTI2fQ.mfAqEEsf4GD8f2g4E_70S1QwF42z90WFWewqHu4eLl0
 
 {
   "title": "Zrobić projekt na studia",
-  "description": "Dokończyć Lab 13 - Refresh Token"
+  "description": "Dokończyć Lab 13 - Refresh Token",
+  "completed": true
 }
 
 ### KROK 5: Pobierz zadania (Wklej ACCESS TOKEN)
 GET http://localhost:8080/api/tasks
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50IiwiaWF0IjoxNzY5Mjk3NTcwLCJleHAiOjE3NjkzODM5NzB9.wf_Ktal4RcLUsgNIwGSkEl1bWLLsgVilTNXT83V-JuA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50OCIsImlhdCI6MTc2OTU0NzcyNiwiZXhwIjoxNzY5NjM0MTI2fQ.mfAqEEsf4GD8f2g4E_70S1QwF42z90WFWewqHu4eLl0
 
 ### KROK 6: ODŚWIEŻANIE TOKENA (Wklej REFRESH TOKEN)
 POST http://localhost:8080/api/auth/refresh
 Content-Type: application/json
 
 {
-  "refreshToken": "37ee399d-3260-40f3-8c79-337e98ad513b"
+  "refreshToken": "3b6c5eb5-7918-4467-a566-6a95534dcc7d"
 }
